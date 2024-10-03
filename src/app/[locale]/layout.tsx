@@ -1,8 +1,10 @@
 import "../styles/globals.css";
 
 import type { Metadata } from "next";
-import { i18n } from "@/shared/i18n";
+import { i18n, Locale } from "@/shared/i18n";
 import { nunitoSans, poppins } from "@/shared/config";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "Marshmallow Watch",
@@ -17,19 +19,25 @@ export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: { lang: string };
+  params: { locale: Locale };
 }>) {
+  const messages = await getMessages();
+
   return (
     <html
-      lang={params.lang}
+      lang={params.locale}
       className={`${nunitoSans.variable} ${poppins.variable}`}
     >
-      <body className="font-nunito-sans">{children}</body>
+      <body className="font-nunito-sans">
+        <NextIntlClientProvider messages={messages}>
+          {children}
+        </NextIntlClientProvider>
+      </body>
     </html>
   );
 }
