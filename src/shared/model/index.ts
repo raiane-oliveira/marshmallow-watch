@@ -1,1 +1,1 @@
-export * from './util-types'
+export type * from './util-types'

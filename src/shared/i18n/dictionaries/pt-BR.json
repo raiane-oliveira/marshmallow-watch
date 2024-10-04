@@ -1,5 +1,47 @@
 {
-  "home": {
-    "title": "Olá mundo"
+  "HomePage": {
+    "Metadata": {
+      "title": "Início"
+    },
+    "header": {
+      "title": "Boas vindas!",
+      "description": "Faça login, crie sua conta ou entre como visitante"
+    },
+    "buttons": {
+      "logInWithCredentials": "E-mail e senha",
+      "signUp": "Criar sua conta",
+      "asVisit": "Acessar como visitante"
+    }
+  },
+  "LoginPage": {
+    "Metadata": {
+      "title": "Entrar"
+    },
+    "header": {
+      "title": "Entrar",
+      "description": "Faça login ou <link>crie uma conta</link>."
+    },
+    "form": {
+      "inputs": {
+        "email": {
+          "errorMessage": "E-mail inválido",
+          "placeholder": "E-mail"
+        },
+        "password": {
+          "errorMessage": "Senha inválida",
+          "placeholder": "Senha"
+        }
+      },
+      "submitButton": "Enviar"
+    }
+  },
+  "Api": {
+    "login": {
+      "title": "Ops, algum coisa aconteceu",
+      "statusCode": {
+        "401": "E-mail não existe ou senha está incorreta",
+        "400": "E-mail ou senha inválidos"
+      }
+    }
   }
 }

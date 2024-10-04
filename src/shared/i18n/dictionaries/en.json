@@ -1,5 +1,47 @@
 {
-  "home": {
-    "title": "Hello World"
+  "HomePage": {
+    "Metadata": {
+      "title": "Home"
+    },
+    "header": {
+      "title": "Welcome!",
+      "description": "Log in, create an account or log in as a visit"
+    },
+    "buttons": {
+      "logInWithCredentials": "E-mail and password",
+      "signUp": "Create your account",
+      "asVisit": "Log in as a visit"
+    }
+  },
+  "LoginPage": {
+    "Metadata": {
+      "title": "Log in"
+    },
+    "header": {
+      "title": "Log in",
+      "description": "Log in or <link>create an account</link>."
+    },
+    "form": {
+      "inputs": {
+        "email": {
+          "errorMessage": "Invalid e-mail",
+          "placeholder": "E-mail"
+        },
+        "password": {
+          "errorMessage": "Invalid password",
+          "placeholder": "Password"
+        }
+      },
+      "submitButton": "Send"
+    }
+  },
+  "Api": {
+    "login": {
+      "title": "Ops, somethind bad happens!",
+      "statusCode": {
+        "401": "E-mail doesn't exist or password it's incorrect ",
+        "400": "Invalid credentials"
+      }
+    }
   }
 }

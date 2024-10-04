@@ -1,13 +1,17 @@
 import "../styles/globals.css";
 
 import type { Metadata } from "next";
-import { i18n, Locale } from "@/shared/i18n";
+import { Locale } from "@/shared/i18n";
 import { nunitoSans, poppins } from "@/shared/config";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { Toaster } from "@/shared/ui";
 
 export const metadata: Metadata = {
-  title: "Marshmallow Watch",
+  title: {
+    default: "Marshmallow Watch",
+    template: "%s | Marshmallow Watch",
+  },
   description:
     "Explore exclusive trailers, create personalized lists, and more with Marshmallow Watch. Transform your entertainment discovery experience today!",
   authors: [
@@ -15,9 +19,9 @@ export const metadata: Metadata = {
   ],
 };
 
-export async function generateStaticParams() {
-  return i18n.locales.map((locale) => ({ lang: locale }));
-}
+// export async function generateStaticParams() {
+//   return routing.locales.map((locale) => ({ lang: locale }));
+// }
 
 export default async function RootLayout({
   children,
@@ -33,9 +37,11 @@ export default async function RootLayout({
       lang={params.locale}
       className={`${nunitoSans.variable} ${poppins.variable}`}
     >
-      <body className="font-nunito-sans">
+      <body className="font-nunito-sans antialiased text-zinc-700">
         <NextIntlClientProvider messages={messages}>
           {children}
+
+          <Toaster />
         </NextIntlClientProvider>
       </body>
     </html>
