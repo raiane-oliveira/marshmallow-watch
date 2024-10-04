@@ -1,4 +1,20 @@
 {
+  "Api": {
+    "login": {
+      "title": "Ops, algum coisa aconteceu",
+      "statusCode": {
+        "401": "E-mail não existe ou senha está incorreta",
+        "400": "E-mail ou senha inválidos"
+      }
+    },
+    "register": {
+      "title": "Ops, algum coisa aconteceu",
+      "statusCode": {
+        "401": "E-mail não existe ou senha está incorreta",
+        "400": "E-mail ou senha inválidos"
+      }
+    }
+  },
   "HomePage": {
     "Metadata": {
       "title": "Início"
@@ -35,13 +51,34 @@
       "submitButton": "Enviar"
     }
   },
-  "Api": {
-    "login": {
-      "title": "Ops, algum coisa aconteceu",
-      "statusCode": {
-        "401": "E-mail não existe ou senha está incorreta",
-        "400": "E-mail ou senha inválidos"
-      }
+  "RegisterPage": {
+    "Metadata": {
+      "title": "Cadastro"
+    },
+    "header": {
+      "title": "Cadastro",
+      "description": "Já possui uma conta? <link>Faça seu login aqui</link>"
+    },
+    "form": {
+      "inputs": {
+        "name": {
+          "errorMessage": "Nome inválido",
+          "placeholder": "Nome"
+        },
+        "username": {
+          "errorMessage": "Nome de usuário inválido",
+          "placeholder": "Nome de usuário (ex: johndoe)"
+        },
+        "email": {
+          "errorMessage": "E-mail inválido",
+          "placeholder": "E-mail"
+        },
+        "password": {
+          "errorMessage": "Senha inválida",
+          "placeholder": "Senha"
+        }
+      },
+      "submitButton": "Enviar"
     }
   }
 }

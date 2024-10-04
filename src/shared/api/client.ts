@@ -15,7 +15,10 @@ class Api {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL;
     const url = new URL(path, baseUrl);
 
-    return fetch(url, init);
+    return fetch(url, {
+      ...init,
+      credentials: 'include'
+    });
   }
 
   async get<B = any, R = any>(path: string, data?: B, headers?: HeadersInit): Promise<ApiFetchReturn<R>> {
@@ -30,7 +33,7 @@ class Api {
       body: data instanceof FormData ? data : JSON.stringify(data)
     })
 
-    const body = await response.json()
+    const body: R = await response.json()
 
     return {
       status: response.status,
@@ -43,7 +46,7 @@ class Api {
   async post<B = any, R = any>(path: string, data: B, headers?: HeadersInit): Promise<ApiFetchReturn<R>> {
     await this.refreshToken()
 
-    const request = await this.api(path, {
+    const response = await this.api(path, {
       method: 'POST',
       headers: {
         ...headers,
@@ -52,12 +55,12 @@ class Api {
       body: data instanceof FormData ? data : JSON.stringify(data)
     })
 
-    const body = await request.json()
+    const body: R = await response.json()
 
     return {
-      status: request.status,
-      statusText: request.statusText,
-      headers: request.headers,
+      status: response.status,
+      statusText: response.statusText,
+      headers: response.headers,
       data: body
     }
   }
@@ -74,7 +77,7 @@ class Api {
       body: data instanceof FormData ? data : JSON.stringify(data)
     })
 
-    const body = await response.json()
+    const body: R = await response.json()
 
     return {
       status: response.status,
@@ -96,7 +99,7 @@ class Api {
       body: data instanceof FormData ? data : JSON.stringify(data)
     })
 
-    const body = await response.json()
+    const body: R = await response.json()
 
     return {
       status: response.status,
@@ -118,7 +121,7 @@ class Api {
       body: data instanceof FormData ? data : JSON.stringify(data)
     })
 
-    const body = await response.json()
+    const body: R = await response.json()
 
     return {
       status: response.status,

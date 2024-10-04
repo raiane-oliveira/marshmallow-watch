@@ -7,3 +7,9 @@ export interface ApiValidationErrorResponse extends ApiErrorResponse {
     [key: string]: string[]
   }
 }
+
+export interface Token {
+  sub: string
+  iat: number
+  exp: number
+}

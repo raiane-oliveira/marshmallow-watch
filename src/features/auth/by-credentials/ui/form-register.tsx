@@ -5,38 +5,42 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { login } from "../api/login";
+import { registerUser } from "../api/register";
 import { toast } from "@/shared/lib";
 import { useRouter } from "@/shared/i18n";
 import { setCookie } from "cookies-next";
 import { accessTokenCookieName } from "@/shared/model";
 
-export const loginByCredentialsSchema = z.object({
+export const registerByCredentialsSchema = z.object({
+  name: z.string(),
+  username: z.string().min(3),
   email: z.string().email(),
   password: z.string().min(6),
 });
 
-export type LoginByCredentialsData = z.infer<typeof loginByCredentialsSchema>;
+export type RegisterByCredentialsData = z.infer<
+  typeof registerByCredentialsSchema
+>;
 
-export function FormLogin() {
-  const dict = useTranslations("LoginPage.form");
-  const dictApi = useTranslations("Api.login");
+export function FormRegister() {
+  const dict = useTranslations("RegisterPage.form");
+  const dictApi = useTranslations("Api.register");
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<LoginByCredentialsData>({
-    resolver: zodResolver(loginByCredentialsSchema),
+  } = useForm<RegisterByCredentialsData>({
+    resolver: zodResolver(registerByCredentialsSchema),
   });
 
   const router = useRouter();
 
-  async function handleLoginUser(data: LoginByCredentialsData) {
+  async function handleRegisterUser(data: RegisterByCredentialsData) {
     try {
-      const response = await login(data);
+      const response = await registerUser(data);
 
-      if (response.status !== 200) {
+      if (response.status !== 201) {
         return toast({
           title: dictApi("title"),
           description: response.data.message,
@@ -47,10 +51,10 @@ export function FormLogin() {
       setCookie(accessTokenCookieName, response.data.token);
 
       router.push("/app");
-    } catch (err) {
+    } catch (err: any) {
       return toast({
         title: "500",
-        description: "Internal Server Error",
+        description: err?.message ?? "Internal Server Error",
         variant: "destructive",
       });
     }
@@ -58,10 +62,40 @@ export function FormLogin() {
 
   return (
     <form
-      onSubmit={handleSubmit(handleLoginUser)}
+      onSubmit={handleSubmit(handleRegisterUser)}
       className="flex flex-col gap-4.5"
     >
       <div className="flex flex-col gap-3">
+        <label className="flex flex-col gap-2">
+          <Input
+            aria-label={dict("inputs.name.placeholder")}
+            placeholder={dict("inputs.name.placeholder")}
+            data-error={errors.name !== undefined}
+            {...register("name")}
+          />
+
+          {errors.name && (
+            <span className="text-red-500 text-sm">
+              {dict("inputs.name.errorMessage")}
+            </span>
+          )}
+        </label>
+
+        <label className="flex flex-col gap-2">
+          <Input
+            aria-label={dict("inputs.username.placeholder")}
+            placeholder={dict("inputs.username.placeholder")}
+            data-error={errors.username !== undefined}
+            {...register("username")}
+          />
+
+          {errors.username && (
+            <span className="text-red-500 text-sm">
+              {dict("inputs.username.errorMessage")}
+            </span>
+          )}
+        </label>
+
         <label className="flex flex-col gap-2">
           <Input
             aria-label={dict("inputs.email.placeholder")}

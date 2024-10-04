@@ -1,4 +1,20 @@
 {
+  "Api": {
+    "login": {
+      "title": "Ops, somethind bad happens!",
+      "statusCode": {
+        "401": "E-mail doesn't exist or password it's incorrect ",
+        "400": "Invalid credentials"
+      }
+    },
+    "register": {
+      "title": "Ops, somethind bad happens!",
+      "statusCode": {
+        "401": "E-mail doesn't exist or password it's incorrect ",
+        "400": "Invalid credentials"
+      }
+    }
+  },
   "HomePage": {
     "Metadata": {
       "title": "Home"
@@ -35,13 +51,34 @@
       "submitButton": "Send"
     }
   },
-  "Api": {
-    "login": {
-      "title": "Ops, somethind bad happens!",
-      "statusCode": {
-        "401": "E-mail doesn't exist or password it's incorrect ",
-        "400": "Invalid credentials"
-      }
+  "RegisterPage": {
+    "Metadata": {
+      "title": "Sign Up"
+    },
+    "header": {
+      "title": "Sign Up",
+      "description": "Already have an account? <link>Log in here</link>"
+    },
+    "form": {
+      "inputs": {
+        "name": {
+          "errorMessage": "Invalid name",
+          "placeholder": "Name"
+        },
+        "username": {
+          "errorMessage": "Invalid username",
+          "placeholder": "Username (i.e. johndoe)"
+        },
+        "email": {
+          "errorMessage": "Invalid e-mail",
+          "placeholder": "E-mail"
+        },
+        "password": {
+          "errorMessage": "Invalid password",
+          "placeholder": "Password"
+        }
+      },
+      "submitButton": "Send"
     }
   }
 }
