@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, DuoToneSpinner, Input } from "@/shared/ui";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -23,6 +23,7 @@ export type RegisterByCredentialsData = z.infer<
 >;
 
 export function FormRegister() {
+  const locale = useLocale();
   const dict = useTranslations("RegisterPage.form");
   const dictApi = useTranslations("Api.register");
 
@@ -38,7 +39,7 @@ export function FormRegister() {
 
   async function handleRegisterUser(data: RegisterByCredentialsData) {
     try {
-      const response = await registerUser(data);
+      const response = await registerUser(data, locale);
 
       if (response.status !== 201) {
         return toast({

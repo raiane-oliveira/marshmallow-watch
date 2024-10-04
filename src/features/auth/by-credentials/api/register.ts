@@ -6,8 +6,8 @@ interface RegisterResponse {
 }
 export type RegisterApiResponse = ApiErrorResponse | ApiValidationErrorResponse | RegisterResponse
 
-export async function registerUser(data: RegisterByCredentialsData) {
-  const response = await api.post<any, RegisterApiResponse>("/users/register", data);
+export async function registerUser(data: RegisterByCredentialsData, locale: string = "en") {
+  const response = await api.post<any, RegisterApiResponse>(`/users/register?lang=${locale}`, data);
 
   return {
     status: response.status,

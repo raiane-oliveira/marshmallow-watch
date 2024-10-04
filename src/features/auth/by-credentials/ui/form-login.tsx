@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, DuoToneSpinner, Input } from "@/shared/ui";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -19,6 +19,7 @@ export const loginByCredentialsSchema = z.object({
 export type LoginByCredentialsData = z.infer<typeof loginByCredentialsSchema>;
 
 export function FormLogin() {
+  const locale = useLocale();
   const dict = useTranslations("LoginPage.form");
   const dictApi = useTranslations("Api.login");
 
@@ -34,7 +35,7 @@ export function FormLogin() {
 
   async function handleLoginUser(data: LoginByCredentialsData) {
     try {
-      const response = await login(data);
+      const response = await login(data, locale);
 
       if (response.status !== 200) {
         return toast({

@@ -6,8 +6,8 @@ interface LoginResponse {
 }
 export type LoginApiResponse = LoginResponse | ApiErrorResponse | ApiValidationErrorResponse
 
-export async function login(data: LoginByCredentialsData) {
-  const response = await api.post<LoginByCredentialsData, LoginApiResponse>("/login", {
+export async function login(data: LoginByCredentialsData, locale: string = "en") {
+  const response = await api.post<LoginByCredentialsData, LoginApiResponse>(`/login?lang=${locale}`, {
     email: data.email,
     password: data.password,
   });
