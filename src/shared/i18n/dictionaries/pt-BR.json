@@ -1,20 +1,4 @@
 {
-  "Api": {
-    "login": {
-      "title": "Ops, algum coisa aconteceu",
-      "statusCode": {
-        "401": "E-mail não existe ou senha está incorreta",
-        "400": "E-mail ou senha inválidos"
-      }
-    },
-    "register": {
-      "title": "Ops, algum coisa aconteceu",
-      "statusCode": {
-        "401": "E-mail não existe ou senha está incorreta",
-        "400": "E-mail ou senha inválidos"
-      }
-    }
-  },
   "HomePage": {
     "Metadata": {
       "title": "Início"
@@ -79,6 +63,25 @@
         }
       },
       "submitButton": "Enviar"
+    }
+  },
+  "App": {
+    "header": {
+      "nav": {
+        "home": "Home",
+        "search": "Pesquisar",
+        "movies": "Filmes",
+        "tvShows": "Séries",
+        "favorites": "Favoritos"
+      },
+      "profile": {
+        "name": "Visitante"
+      }
+    },
+    "HomePage": {
+      "Metadata": {
+        "title": "Descubra"
+      }
     }
   }
 }

@@ -27,9 +27,10 @@ export default async function middleware(request: NextRequest) {
   const accessTokenPayload: Token | undefined = accessToken && jwtDecode(accessToken.value)
   const isAccessTokenExpired = accessTokenPayload && checkTimestampIsBeforeToday(accessTokenPayload.exp)
 
-  if ((!accessToken || isAccessTokenExpired) && refreshTokenCookie) {
+  if ((isAccessTokenExpired || !accessToken) && refreshTokenCookie) {
     const response = await refreshToken()
 
+    console.log('chegou aqui')
     if (!response.data?.token) {
       return toHomePage()
     }

@@ -1,20 +1,4 @@
 {
-  "Api": {
-    "login": {
-      "title": "Ops, somethind bad happens!",
-      "statusCode": {
-        "401": "E-mail doesn't exist or password it's incorrect ",
-        "400": "Invalid credentials"
-      }
-    },
-    "register": {
-      "title": "Ops, somethind bad happens!",
-      "statusCode": {
-        "401": "E-mail doesn't exist or password it's incorrect ",
-        "400": "Invalid credentials"
-      }
-    }
-  },
   "HomePage": {
     "Metadata": {
       "title": "Home"
@@ -79,6 +63,25 @@
         }
       },
       "submitButton": "Send"
+    }
+  },
+  "App": {
+    "header": {
+      "nav": {
+        "home": "Home",
+        "search": "Search",
+        "movies": "movies",
+        "tvShows": "Tv Shows",
+        "favorites": "Favorites"
+      },
+      "profile": {
+        "name": "Guest"
+      }
+    },
+    "HomePage": {
+      "Metadata": {
+        "title": "Discover"
+      }
     }
   }
 }

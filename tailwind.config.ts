@@ -36,6 +36,9 @@ const config: Config = {
         'nunito-sans': ["var(--font-nunito-sans)", "sans-serif"],
         poppins: ["var(--font-poppins)", "sans-serif"]
       },
+      fontSize: {
+        'md': '0.9375rem' // 15px
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
