@@ -1,15 +1,18 @@
 export interface ApiErrorResponse {
-  message: string
+	message: string;
+	issues?: {
+		[key: string]: string[];
+	};
 }
 
-export interface ApiValidationErrorResponse extends ApiErrorResponse {
-  issues: {
-    [key: string]: string[]
-  }
+export interface ApiResponse<T> {
+	status: number;
+	statusText: string;
+	data: T;
 }
 
 export interface Token {
-  sub: string
-  iat: number
-  exp: number
+	sub: string;
+	iat: number;
+	exp: number;
 }

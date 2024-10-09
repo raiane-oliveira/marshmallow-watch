@@ -12,97 +12,97 @@ import { setCookie } from "cookies-next";
 import { accessTokenCookieName } from "@/shared/model";
 
 export const loginByCredentialsSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
+	email: z.string().email(),
+	password: z.string().min(6),
 });
 
 export type LoginByCredentialsData = z.infer<typeof loginByCredentialsSchema>;
 
 export function FormLogin() {
-  const locale = useLocale();
-  const dict = useTranslations("LoginPage.form");
-  const dictApi = useTranslations("Api.login");
+	const locale = useLocale();
+	const dict = useTranslations("LoginPage.form");
+	const dictApi = useTranslations("Api.errors");
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<LoginByCredentialsData>({
-    resolver: zodResolver(loginByCredentialsSchema),
-  });
+	const {
+		register,
+		handleSubmit,
+		formState: { errors, isSubmitting },
+	} = useForm<LoginByCredentialsData>({
+		resolver: zodResolver(loginByCredentialsSchema),
+	});
 
-  const router = useRouter();
+	const router = useRouter();
 
-  async function handleLoginUser(data: LoginByCredentialsData) {
-    try {
-      const response = await login(data, locale);
+	async function handleLoginUser(data: LoginByCredentialsData) {
+		try {
+			const response = await login(data, locale);
 
-      if (response.status !== 200) {
-        return toast({
-          title: dictApi("title"),
-          description: response.data.message,
-          variant: "destructive",
-        });
-      }
+			if (response.isLeft()) {
+				return toast({
+					title: dictApi("title"),
+					description: response.value.data.message,
+					variant: "destructive",
+				});
+			}
 
-      setCookie(accessTokenCookieName, response.data.token);
+			setCookie(accessTokenCookieName, response.value.data.token);
 
-      router.push("/app");
-    } catch (err) {
-      return toast({
-        title: "500",
-        description: "Internal Server Error",
-        variant: "destructive",
-      });
-    }
-  }
+			router.push("/app");
+		} catch (err) {
+			return toast({
+				title: "500",
+				description: "Internal Server Error",
+				variant: "destructive",
+			});
+		}
+	}
 
-  return (
-    <form
-      onSubmit={handleSubmit(handleLoginUser)}
-      className="flex flex-col gap-4.5"
-    >
-      <div className="flex flex-col gap-3">
-        <label className="flex flex-col gap-2">
-          <Input
-            aria-label={dict("inputs.email.placeholder")}
-            placeholder={dict("inputs.email.placeholder")}
-            data-error={errors.email !== undefined}
-            {...register("email")}
-          />
+	return (
+		<form
+			onSubmit={handleSubmit(handleLoginUser)}
+			className="flex flex-col gap-4.5"
+		>
+			<div className="flex flex-col gap-3">
+				<label className="flex flex-col gap-2">
+					<Input
+						aria-label={dict("inputs.email.placeholder")}
+						placeholder={dict("inputs.email.placeholder")}
+						data-error={errors.email !== undefined}
+						{...register("email")}
+					/>
 
-          {errors.email && (
-            <span className="text-red-500 text-sm">
-              {dict("inputs.email.errorMessage")}
-            </span>
-          )}
-        </label>
+					{errors.email && (
+						<span className="text-red-500 text-sm">
+							{dict("inputs.email.errorMessage")}
+						</span>
+					)}
+				</label>
 
-        <label className="flex flex-col gap-2">
-          <Input
-            type="password"
-            placeholder={dict("inputs.password.placeholder")}
-            aria-label={dict("inputs.password.placeholder")}
-            data-error={errors.password !== undefined}
-            {...register("password")}
-          />
+				<label className="flex flex-col gap-2">
+					<Input
+						type="password"
+						placeholder={dict("inputs.password.placeholder")}
+						aria-label={dict("inputs.password.placeholder")}
+						data-error={errors.password !== undefined}
+						{...register("password")}
+					/>
 
-          {errors.password && (
-            <span className="text-red-500 text-sm">
-              {dict("inputs.password.errorMessage")}
-            </span>
-          )}
-        </label>
-      </div>
+					{errors.password && (
+						<span className="text-red-500 text-sm">
+							{dict("inputs.password.errorMessage")}
+						</span>
+					)}
+				</label>
+			</div>
 
-      <Button
-        size="lg"
-        type="submit"
-        className="w-full font-poppins font-semibold text-base/6 text-zinc-50"
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? <DuoToneSpinner /> : dict("submitButton")}
-      </Button>
-    </form>
-  );
+			<Button
+				size="lg"
+				type="submit"
+				className="w-full font-poppins font-semibold text-base/6 text-zinc-50"
+				disabled={isSubmitting}
+			>
+				{isSubmitting ? <DuoToneSpinner /> : dict("submitButton")}
+			</Button>
+		</form>
+	);
 }

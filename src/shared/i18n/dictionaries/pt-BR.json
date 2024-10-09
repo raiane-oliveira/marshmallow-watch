@@ -1,4 +1,9 @@
 {
+  "Api": {
+    "errors": {
+      "title": "Ops, alguma coisa deu errado!"
+    }
+  },
   "HomePage": {
     "Metadata": {
       "title": "Início"
