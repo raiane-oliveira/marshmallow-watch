@@ -43,6 +43,6 @@ export async function login(
 
 	return right({
 		...sharedData,
-		data: response.data as LoginSuccessResponse,
+		data: response.data,
 	});
 }

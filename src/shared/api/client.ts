@@ -1,140 +1,204 @@
+import { checkTimestampIsBeforeToday } from "../lib";
+import { getAuth, refreshTokenCookieName } from "../model";
+
 interface ApiFetchReturn<B> {
-  status: number
-  statusText: string
-  data: B
-  headers?: Headers
+	status: number;
+	statusText: string;
+	data: B;
+	headers?: Headers;
 }
 
 class Api {
-  private async refreshToken() {
-    // TODO
-    return
-  }
+	private async refreshToken() {
+		const isExecutingOnServer = typeof window === "undefined";
 
-  private api(path: string, init?: RequestInit) {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-    const url = new URL(path, baseUrl);
+		if (isExecutingOnServer) {
+			const { refreshToken: refreshTokenCookie, accessTokenPayload } =
+				getAuth("server");
 
-    return fetch(url, {
-      ...init,
-      credentials: 'include'
-    });
-  }
+			const isAccessTokenExpired =
+				accessTokenPayload &&
+				checkTimestampIsBeforeToday(accessTokenPayload.exp);
 
-  async get<B = any, R = any>(path: string, data?: B, headers?: HeadersInit): Promise<ApiFetchReturn<R>> {
-    await this.refreshToken()
+			if (!isAccessTokenExpired || !refreshTokenCookie) {
+				return;
+			}
 
-    const response = await this.api(path, {
-      method: 'GET',
-      headers: {
-        ...headers,
-        "Content-Type": data instanceof FormData ? "multipart/form-data" : "application/json",
-      },
-      body: data instanceof FormData ? data : JSON.stringify(data)
-    })
+			await api.patch<any, { token: string }>(
+				"/token/refresh",
+				{},
+				{
+					Cookie: `${refreshTokenCookieName}=${refreshTokenCookie}`,
+					"Set-Cookie": `${refreshTokenCookieName}=${refreshTokenCookie}`,
+				},
+			);
 
-    const body: R = await response.json()
+			return;
+		}
 
-    return {
-      status: response.status,
-      statusText: response.statusText,
-      headers: response.headers,
-      data: body
-    }
-  }
+		const { refreshToken: refreshTokenCookie, accessTokenPayload } = getAuth();
 
-  async post<B = any, R = any>(path: string, data: B, headers?: HeadersInit): Promise<ApiFetchReturn<R>> {
-    await this.refreshToken()
+		const isAccessTokenExpired =
+			accessTokenPayload && checkTimestampIsBeforeToday(accessTokenPayload.exp);
 
-    const response = await this.api(path, {
-      method: 'POST',
-      headers: {
-        ...headers,
-        "Content-Type": data instanceof FormData ? "multipart/form-data" : "application/json",
-      },
-      body: data instanceof FormData ? data : JSON.stringify(data)
-    })
+		if (!isAccessTokenExpired || !refreshTokenCookie) {
+			return;
+		}
 
-    const body: R = await response.json()
+		await api.patch<any, { token: string }>("/token/refresh", {});
 
-    return {
-      status: response.status,
-      statusText: response.statusText,
-      headers: response.headers,
-      data: body
-    }
-  }
+		return;
+	}
 
-  async put<B = any, R = any>(path: string, data?: B, headers?: HeadersInit): Promise<ApiFetchReturn<R>> {
-    await this.refreshToken()
+	private api(path: string, init?: RequestInit) {
+		const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+		const url = new URL(path, baseUrl);
 
-    const response = await this.api(path, {
-      method: 'PUT',
-      headers: {
-        ...headers,
-        "Content-Type": data instanceof FormData ? "multipart/form-data" : "application/json",
-      },
-      body: data instanceof FormData ? data : JSON.stringify(data)
-    })
+		return fetch(url, {
+			...init,
+			credentials: "include",
+		});
+	}
 
-    const body: R = await response.json()
+	async get<B = any, R = any>(
+		path: string,
+		data?: B,
+		headers?: HeadersInit,
+	): Promise<ApiFetchReturn<R>> {
+		await this.refreshToken();
 
-    return {
-      status: response.status,
-      statusText: response.statusText,
-      headers: response.headers,
-      data: body
-    }
-  }
+		const response = await this.api(path, {
+			method: "GET",
+			headers: {
+				...headers,
+				"Content-Type":
+					data instanceof FormData ? "multipart/form-data" : "application/json",
+			},
+			body: data instanceof FormData ? data : JSON.stringify(data),
+		});
 
-  async patch<B = any, R = any>(path: string, data?: B, headers?: HeadersInit): Promise<ApiFetchReturn<R>> {
-    await this.refreshToken()
+		const body: R = await response.json();
 
-    const response = await this.api(path, {
-      method: 'PATCH',
-      headers: {
-        ...headers,
-        "Content-Type": data instanceof FormData ? "multipart/form-data" : "application/json",
-      },
-      body: data instanceof FormData ? data : JSON.stringify(data)
-    })
+		return {
+			status: response.status,
+			statusText: response.statusText,
+			headers: response.headers,
+			data: body,
+		};
+	}
 
-    const body: R = await response.json()
+	async post<B = any, R = any>(
+		path: string,
+		data: B,
+		headers?: HeadersInit,
+	): Promise<ApiFetchReturn<R>> {
+		await this.refreshToken();
 
-    return {
-      status: response.status,
-      statusText: response.statusText,
-      headers: response.headers,
-      data: body
-    }
-  }
+		const response = await this.api(path, {
+			method: "POST",
+			headers: {
+				...headers,
+				"Content-Type":
+					data instanceof FormData ? "multipart/form-data" : "application/json",
+			},
+			body: data instanceof FormData ? data : JSON.stringify(data),
+		});
 
-  async delete<B = any, R = any>(path: string, data?: B, headers?: HeadersInit): Promise<ApiFetchReturn<R>> {
-    await this.refreshToken()
+		const body: R = await response.json();
 
-    const response = await this.api(path, {
-      method: 'DELETE',
-      headers: {
-        ...headers,
-        "Content-Type": data instanceof FormData ? "multipart/form-data" : "application/json",
-      },
-      body: data instanceof FormData ? data : JSON.stringify(data)
-    })
+		return {
+			status: response.status,
+			statusText: response.statusText,
+			headers: response.headers,
+			data: body,
+		};
+	}
 
-    const body: R = await response.json()
+	async put<B = any, R = any>(
+		path: string,
+		data?: B,
+		headers?: HeadersInit,
+	): Promise<ApiFetchReturn<R>> {
+		await this.refreshToken();
 
-    return {
-      status: response.status,
-      statusText: response.statusText,
-      headers: response.headers,
-      data: body
-    }
-  }
+		const response = await this.api(path, {
+			method: "PUT",
+			headers: {
+				...headers,
+				"Content-Type":
+					data instanceof FormData ? "multipart/form-data" : "application/json",
+			},
+			body: data instanceof FormData ? data : JSON.stringify(data),
+		});
 
-  async request(path: string, init?: RequestInit) {
-    await this.refreshToken()
-    return this.api(path, init)
-  }
+		const body: R = await response.json();
+
+		return {
+			status: response.status,
+			statusText: response.statusText,
+			headers: response.headers,
+			data: body,
+		};
+	}
+
+	async patch<B = any, R = any>(
+		path: string,
+		data?: B,
+		headers?: HeadersInit,
+	): Promise<ApiFetchReturn<R>> {
+		await this.refreshToken();
+
+		const response = await this.api(path, {
+			method: "PATCH",
+			headers: {
+				...headers,
+				"Content-Type":
+					data instanceof FormData ? "multipart/form-data" : "application/json",
+			},
+			body: data instanceof FormData ? data : JSON.stringify(data),
+		});
+
+		const body: R = await response.json();
+
+		return {
+			status: response.status,
+			statusText: response.statusText,
+			headers: response.headers,
+			data: body,
+		};
+	}
+
+	async delete<B = any, R = any>(
+		path: string,
+		data?: B,
+		headers?: HeadersInit,
+	): Promise<ApiFetchReturn<R>> {
+		await this.refreshToken();
+
+		const response = await this.api(path, {
+			method: "DELETE",
+			headers: {
+				...headers,
+				"Content-Type":
+					data instanceof FormData ? "multipart/form-data" : "application/json",
+			},
+			body: data instanceof FormData ? data : JSON.stringify(data),
+		});
+
+		const body: R = await response.json();
+
+		return {
+			status: response.status,
+			statusText: response.statusText,
+			headers: response.headers,
+			data: body,
+		};
+	}
+
+	async request(path: string, init?: RequestInit) {
+		await this.refreshToken();
+		return this.api(path, init);
+	}
 }
 
-export const api = new Api()
+export const api = new Api();
