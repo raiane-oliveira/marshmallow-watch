@@ -19,7 +19,7 @@ export function Header() {
 	const user = useCurrentUserStore((state) => state.user);
 
 	return (
-		<div className="w-full sticky">
+		<div className="w-full z-50 sticky">
 			<header className="container font-poppins flex justify-between items-center">
 				<nav className="flex items-center">
 					<Link href="/app" className="block py-4 pr-8">
@@ -76,9 +76,18 @@ export function Header() {
 				</nav>
 
 				<div className="flex items-center gap-4">
-					<span className="poppins text-md/4 font-semibold text-zinc-700">
-						{user?.name ?? dict("profile.name")}
-					</span>
+					{user?.name ? (
+						<span className="poppins text-md/4 font-semibold text-zinc-700">
+							{user?.name}
+						</span>
+					) : (
+						<Link
+							href="/sign-up"
+							className="poppins text-md/4 font-semibold text-zinc-700 underline hover:text-zinc-900"
+						>
+							{dict("profile.name")}
+						</Link>
+					)}
 					<Avatar className="size-12">
 						<AvatarImage src={user?.avatarUrl ?? ""} />
 						<AvatarFallback>

@@ -1,4 +1,4 @@
-import { createContext, use, useContext } from "react";
+import { createContext, useContext } from "react";
 import { createCurrentUserStore, CurrentUserStore } from "./current-user-store";
 import { useStore } from "zustand";
 
