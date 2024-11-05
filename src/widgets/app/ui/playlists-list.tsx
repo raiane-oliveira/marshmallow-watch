@@ -49,6 +49,10 @@ export function PlaylistsList({ playlists }: MediasListProps) {
 						playlist.name,
 					);
 
+					const defaultPlaylistName = isDefaultPlaylist
+						? dict(playlist.name as "willWatch" | "watched" | "watching")
+						: "";
+
 					if (isDefaultPlaylist) {
 						return (
 							<CarouselItem
@@ -68,13 +72,10 @@ export function PlaylistsList({ playlists }: MediasListProps) {
 								>
 									<Ticket weight="fill" className="size-8-viewport" />
 									<span
-										title={playlist.name}
+										title={defaultPlaylistName}
 										className="font-bold text-lg-viewport/5-viewport block line-clamp-3"
 									>
-										{dict(
-											playlist.name as "willWatch" | "watched" | "watching",
-										)}{" "}
-										({playlist.mediasId.length})
+										{defaultPlaylistName} ({playlist.mediasId.length})
 									</span>
 								</Link>
 							</CarouselItem>
