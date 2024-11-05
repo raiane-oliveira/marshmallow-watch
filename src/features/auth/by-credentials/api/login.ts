@@ -2,6 +2,7 @@ import {
 	api,
 	ApiErrorResponse,
 	ApiResponse,
+	CurrentUserApi,
 	Either,
 	left,
 	right,
@@ -10,6 +11,7 @@ import { LoginByCredentialsData } from "../ui/form-login";
 
 interface LoginSuccessResponse {
 	token: string;
+	user: CurrentUserApi;
 }
 
 type LoginResponse = Either<

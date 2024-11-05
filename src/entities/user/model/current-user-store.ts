@@ -1,4 +1,5 @@
 import { CurrentUserApi } from "@/shared/api";
+import { userSessionDataKeyName } from "@/shared/model";
 import { createStore } from "zustand";
 
 interface CurrentUserState {
@@ -13,8 +14,10 @@ export type CurrentUserStore = CurrentUserState & CurrentUserActions;
 
 export const createCurrentUserStore = () =>
 	createStore<CurrentUserStore>()((set) => {
+		const userData = localStorage.getItem(userSessionDataKeyName);
+
 		return {
-			user: null,
+			user: userData ? JSON.parse(userData) : null,
 			setUser: (user) => set(() => ({ user })),
 		};
 	});

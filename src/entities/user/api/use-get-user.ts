@@ -9,7 +9,6 @@ import {
 } from "@/shared/api";
 import { getAuth } from "@/shared/model";
 import { useQuery } from "@tanstack/react-query";
-import { useCurrentUserStore } from "..";
 
 interface GetUserSuccessResponse {
 	user: CurrentUserApi;
@@ -21,12 +20,21 @@ type LoginResponse = Either<
 >;
 
 export function useGetUser(locale: string = "en") {
-	const { accessTokenPayload } = getAuth();
-	const setUser = useCurrentUserStore((state) => state.setUser);
+	const { accessTokenPayload, refreshToken } = getAuth();
 
 	const query = useQuery<any, Error, LoginResponse>({
 		queryKey: ["current-user", accessTokenPayload?.sub],
-		queryFn: async () => {
+		queryFn: async (): Promise<LoginResponse> => {
+			if (!refreshToken) {
+				return left({
+					status: 400,
+					statusText: "Guest user",
+					data: {
+						message: "Guest ser",
+					},
+				});
+			}
+
 			const response = await api.get(`/users/current?locale=${locale}`);
 
 			const sharedData = {
@@ -41,15 +49,13 @@ export function useGetUser(locale: string = "en") {
 				});
 			}
 
-			const { user } = response.data as GetUserSuccessResponse;
-			setUser(user);
-
 			return right({
 				...sharedData,
-				data: response.data,
+				data: response.data as GetUserSuccessResponse,
 			});
 		},
 		refetchOnWindowFocus: false,
 	});
+
 	return query;
 }

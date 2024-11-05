@@ -9,7 +9,9 @@ import { login } from "../api/login";
 import { toast } from "@/shared/lib";
 import { useRouter } from "@/shared/i18n";
 import { setCookie } from "cookies-next";
-import { accessTokenCookieName } from "@/shared/model";
+import { accessTokenCookieName, userSessionDataKeyName } from "@/shared/model";
+import { useCurrentUserStore } from "@/entities/user";
+import { CurrentUserApi } from "@/shared/api";
 
 export const loginByCredentialsSchema = z.object({
 	email: z.string().email(),
@@ -31,6 +33,7 @@ export function FormLogin() {
 		resolver: zodResolver(loginByCredentialsSchema),
 	});
 
+	const setUser = useCurrentUserStore((state) => state.setUser);
 	const router = useRouter();
 
 	async function handleLoginUser(data: LoginByCredentialsData) {
@@ -45,7 +48,11 @@ export function FormLogin() {
 				});
 			}
 
+			const user = response.value.data.user;
 			setCookie(accessTokenCookieName, response.value.data.token);
+			setUser(user as CurrentUserApi);
+
+			localStorage.setItem(userSessionDataKeyName, JSON.stringify(user));
 
 			router.push("/app");
 		} catch (err) {

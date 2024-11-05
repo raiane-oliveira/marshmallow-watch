@@ -15,7 +15,6 @@ import { useTranslations } from "next-intl";
 
 export function Header() {
 	const dict = useTranslations("App.header");
-
 	const user = useCurrentUserStore((state) => state.user);
 
 	return (
@@ -76,7 +75,7 @@ export function Header() {
 				</nav>
 
 				<div className="flex items-center gap-4">
-					{user?.name ? (
+					{user ? (
 						<span className="poppins text-md/4 font-semibold text-zinc-700">
 							{user?.name}
 						</span>

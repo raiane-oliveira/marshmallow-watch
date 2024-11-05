@@ -23,7 +23,7 @@ export interface CurrentUserApi {
 	name: string;
 	username: string;
 	email: string;
-	avatarUrl?: sring | null;
+	avatarUrl?: string | null;
 	updatedAt?: null | Date;
 	createdAt: Date;
 }
