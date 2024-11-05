@@ -20,12 +20,12 @@ type LoginResponse = Either<
 >;
 
 export function useGetUser(locale: string = "en") {
-	const { accessTokenPayload, refreshToken } = getAuth();
+	const { accessTokenPayload, accessToken } = getAuth();
 
 	const query = useQuery<any, Error, LoginResponse>({
 		queryKey: ["current-user", accessTokenPayload?.sub],
 		queryFn: async (): Promise<LoginResponse> => {
-			if (!refreshToken) {
+			if (!accessToken) {
 				return left({
 					status: 400,
 					statusText: "Guest user",
@@ -35,7 +35,9 @@ export function useGetUser(locale: string = "en") {
 				});
 			}
 
-			const response = await api.get(`/users/current?locale=${locale}`);
+			const response = await api.get(`/users/current?locale=${locale}`, {
+				Authorization: `Bearer ${accessToken}`,
+			});
 
 			const sharedData = {
 				status: response.status,

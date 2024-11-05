@@ -18,6 +18,16 @@ export interface Token {
 	exp: number;
 }
 
+export interface Playlist {
+	id: string;
+	name: string;
+	visibility: "private" | "public";
+	color: string;
+	mediasId: string[];
+	createdAt: Date;
+	updatedAt: Date | null | undefined;
+}
+
 export interface CurrentUserApi {
 	id: string;
 	name: string;
@@ -26,6 +36,7 @@ export interface CurrentUserApi {
 	avatarUrl?: string | null;
 	updatedAt?: null | Date;
 	createdAt: Date;
+	playlists: Playlist[];
 }
 
 export type PublicUserApi = Omit<CurrentUserApi, "email">;

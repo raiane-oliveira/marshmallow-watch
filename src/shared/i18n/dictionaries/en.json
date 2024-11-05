@@ -1,4 +1,11 @@
 {
+  "Shared": {
+    "userLists": {
+      "willWatch": "I'll watch",
+      "watched": "Watched",
+      "watching": "Watching"
+    }
+  },
   "Api": {
     "errors": {
       "title": "Ops, something went wrong!"
@@ -94,6 +101,7 @@
       },
       "content": {
         "lists": {
+          "userLists": "My Lists",
           "popular": "Popular",
           "releases": "Releases",
           "topRated": "Top Rated Series"

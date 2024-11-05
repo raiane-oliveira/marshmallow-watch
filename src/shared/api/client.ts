@@ -36,18 +36,16 @@ class Api {
 			return;
 		}
 
-		const { refreshToken: refreshTokenCookie, accessTokenPayload } = getAuth();
+		const { accessTokenPayload } = getAuth();
 
 		const isAccessTokenExpired =
 			accessTokenPayload && checkTimestampIsBeforeToday(accessTokenPayload.exp);
 
-		if (!isAccessTokenExpired || !refreshTokenCookie) {
+		if (!isAccessTokenExpired) {
 			return;
 		}
 
 		await api.patch<any, { token: string }>("/token/refresh", {});
-
-		return;
 	}
 
 	private api(path: string, init?: RequestInit) {
@@ -60,9 +58,8 @@ class Api {
 		});
 	}
 
-	async get<B = any, R = any>(
+	async get<R = any>(
 		path: string,
-		data?: B,
 		headers?: HeadersInit,
 	): Promise<ApiFetchReturn<R>> {
 		await this.refreshToken();
@@ -71,10 +68,7 @@ class Api {
 			method: "GET",
 			headers: {
 				...headers,
-				"Content-Type":
-					data instanceof FormData ? "multipart/form-data" : "application/json",
 			},
-			body: data instanceof FormData ? data : JSON.stringify(data),
 		});
 
 		const body: R = await response.json();

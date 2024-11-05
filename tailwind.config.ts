@@ -76,6 +76,7 @@ const config: Config = {
 				"4-viewport": "1.11vw",
 				"4.5": "18px",
 				"5-viewport": "1.4vw",
+				"8-viewport": "2.2vw",
 				"12-viewport": "3.33vw",
 				"20-viewport": "5.55vw",
 			},

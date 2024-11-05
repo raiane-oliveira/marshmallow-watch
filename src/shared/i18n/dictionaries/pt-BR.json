@@ -1,4 +1,11 @@
 {
+  "Shared": {
+    "userLists": {
+      "willWatch": "Vou assistir",
+      "watched": "Assistido",
+      "watching": "Assistindo"
+    }
+  },
   "Api": {
     "errors": {
       "title": "Ops, alguma coisa deu errado!"
@@ -94,6 +101,7 @@
       },
       "content": {
         "lists": {
+          "userLists": "Minhas Listas",
           "popular": "Populares",
           "releases": "Lançamentos",
           "topRated": "Séries bem avalidadas"

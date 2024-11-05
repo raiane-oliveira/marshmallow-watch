@@ -11,7 +11,7 @@ import { useRouter } from "@/shared/i18n";
 import { setCookie } from "cookies-next";
 import { accessTokenCookieName, userSessionDataKeyName } from "@/shared/model";
 import { useCurrentUserStore } from "@/entities/user";
-import { CurrentUserApi } from "@/shared/api";
+import { api, CurrentUserApi } from "@/shared/api";
 
 export const loginByCredentialsSchema = z.object({
 	email: z.string().email(),
@@ -33,6 +33,7 @@ export function FormLogin() {
 		resolver: zodResolver(loginByCredentialsSchema),
 	});
 
+	const accessToken = useCurrentUserStore((state) => state.accessToken);
 	const setUser = useCurrentUserStore((state) => state.setUser);
 	const router = useRouter();
 
@@ -48,10 +49,16 @@ export function FormLogin() {
 				});
 			}
 
-			const user = response.value.data.user;
 			setCookie(accessTokenCookieName, response.value.data.token);
-			setUser(user as CurrentUserApi);
 
+			const currentUserData = await api.get<{
+				user: CurrentUserApi;
+			}>(`/users/current?locale=${locale}`, {
+				Authorization: `Bearer ${accessToken}`,
+			});
+
+			const { user } = currentUserData.data;
+			setUser(user);
 			localStorage.setItem(userSessionDataKeyName, JSON.stringify(user));
 
 			router.push("/app");

@@ -1,1 +1,1 @@
-export { DiscoverPage } from './ui/discover-page'
+export { DiscoverPage } from "./ui/discover-page";

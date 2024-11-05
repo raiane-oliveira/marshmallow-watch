@@ -5,6 +5,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { HeroSection } from "./hero-section";
 import dayjs from "dayjs";
+import { CurrentUserListsSection } from "./current-user-lists-section";
 
 export async function DiscoverPage() {
 	const dict = await getTranslations("App.HomePage");
@@ -25,6 +26,8 @@ export async function DiscoverPage() {
 				<HeroSection />
 
 				<div className="flex flex-col gap-6">
+					<CurrentUserListsSection />
+
 					<section className="flex flex-col w-full gap-2.5">
 						<h4 className="font-bold block pl-8 text-xl-viewport/normal text-zinc-700">
 							{dict("content.lists.popular")}
@@ -33,12 +36,9 @@ export async function DiscoverPage() {
 						<Suspense fallback={<MediasListSkeleton />}>
 							<MediasList
 								fetchMedia={async () => {
-									const res = await api.get<
-										any,
-										{
-											medias: Media[];
-										}
-									>(`/discover/movies-and-shows?lang=${locale}`);
+									const res = await api.get<{
+										medias: Media[];
+									}>(`/discover/movies-and-shows?lang=${locale}`);
 
 									return res.data.medias;
 								}}
@@ -54,12 +54,9 @@ export async function DiscoverPage() {
 						<Suspense fallback={<MediasListSkeleton />}>
 							<MediasList
 								fetchMedia={async () => {
-									const res = await api.get<
-										any,
-										{
-											movies: Movie[];
-										}
-									>(
+									const res = await api.get<{
+										movies: Movie[];
+									}>(
 										`/discover/movies?lang=${locale}&release_date_gte=${previousMonth}&release_date_lte=${currentMonth}&sortBy=popularity.desc`,
 									);
 
@@ -77,12 +74,9 @@ export async function DiscoverPage() {
 						<Suspense fallback={<MediasListSkeleton />}>
 							<MediasList
 								fetchMedia={async () => {
-									const res = await api.get<
-										any,
-										{
-											tvShows: TvShow[];
-										}
-									>(`/top-rated/tv-shows?lang=${locale}`);
+									const res = await api.get<{
+										tvShows: TvShow[];
+									}>(`/top-rated/tv-shows?lang=${locale}`);
 
 									return res.data.tvShows;
 								}}
