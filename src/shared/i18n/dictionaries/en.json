@@ -86,6 +86,13 @@
     "HomePage": {
       "Metadata": {
         "title": "Discover"
+      },
+      "content": {
+        "lists": {
+          "popular": "Popular",
+          "releases": "Releases",
+          "topRated": "Top Rated Series"
+        }
       }
     }
   }

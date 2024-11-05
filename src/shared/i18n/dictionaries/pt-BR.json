@@ -86,6 +86,13 @@
     "HomePage": {
       "Metadata": {
         "title": "Descubra"
+      },
+      "content": {
+        "lists": {
+          "popular": "Populares",
+          "releases": "Lançamentos",
+          "topRated": "Séries bem avalidadas"
+        }
       }
     }
   }

@@ -19,8 +19,8 @@ export function Header() {
 	const user = useCurrentUserStore((state) => state.user);
 
 	return (
-		<div className="w-full z-50 sticky">
-			<header className="container font-poppins flex justify-between items-center">
+		<div className="w-full px-8 z-50 sticky">
+			<header className="font-poppins flex justify-between items-center">
 				<nav className="flex items-center">
 					<Link href="/app" className="block py-4 pr-8">
 						<Logo className="w-14 h-9" />
@@ -30,7 +30,7 @@ export function Header() {
 						href="/app"
 						className="uppercase flex items-center gap-2 py-4 px-4.5 text-zinc-700"
 					>
-						<House className="size-5" />
+						<House weight="fill" className="size-5" />
 						<span className="font-semibold text-sm/4">{dict("nav.home")}</span>
 					</Link>
 
@@ -38,7 +38,7 @@ export function Header() {
 						href="/search"
 						className="text-zinc-700 flex items-center gap-2 py-4 px-4.5 uppercase"
 					>
-						<MagnifyingGlass className="size-5" />
+						<MagnifyingGlass weight="bold" className="size-5" />
 						<span className="font-semibold text-sm/4">
 							{dict("nav.search")}
 						</span>
@@ -48,7 +48,7 @@ export function Header() {
 						href="/movies"
 						className="text-zinc-700 uppercase flex items-center gap-2 py-4 px-4.5"
 					>
-						<Popcorn className="size-5" />
+						<Popcorn weight="fill" className="size-5" />
 						<span className="font-semibold text-sm/4">
 							{dict("nav.movies")}
 						</span>
@@ -58,7 +58,7 @@ export function Header() {
 						href="/tv-shows"
 						className="text-zinc-700 uppercase flex items-center gap-2 py-4 px-4.5"
 					>
-						<TelevisionSimple className="size-5" />
+						<TelevisionSimple weight="fill" className="size-5" />
 						<span className="font-semibold text-sm/4">
 							{dict("nav.tvShows")}
 						</span>
@@ -68,7 +68,7 @@ export function Header() {
 						href="/favorites"
 						className="text-zinc-700 uppercase flex items-center gap-2 py-4 px-4.5"
 					>
-						<ListHeart className="size-5" />
+						<ListHeart weight="fill" className="size-5" />
 						<span className="font-semibold text-sm/4">
 							{dict("nav.favorites")}
 						</span>
@@ -88,10 +88,10 @@ export function Header() {
 							{dict("profile.name")}
 						</Link>
 					)}
-					<Avatar className="size-12">
+					<Avatar className="size-12 drop-shadow">
 						<AvatarImage src={user?.avatarUrl ?? ""} />
 						<AvatarFallback>
-							<User className="size-5" />
+							<User className="size-6 text-zinc-700" />
 						</AvatarFallback>
 					</Avatar>
 				</div>

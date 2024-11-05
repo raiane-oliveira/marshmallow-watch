@@ -29,3 +29,19 @@ export interface CurrentUserApi {
 }
 
 export type PublicUserApi = Omit<CurrentUserApi, "email">;
+
+export interface Media {
+	id: string;
+	title: string;
+	description: string | null;
+	genreIds: string[];
+	imageUrl?: string;
+}
+
+export interface Movie extends Media {
+	releaseAt: Date;
+}
+
+export interface TvShow extends Media {
+	firstAirDate: Date;
+}

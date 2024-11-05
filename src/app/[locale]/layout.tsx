@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import "@/shared/config/dayjs";
 
 import type { Metadata } from "next";
 import { Locale } from "@/shared/i18n";

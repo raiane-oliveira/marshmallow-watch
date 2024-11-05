@@ -9,6 +9,26 @@
 }
 
 @layer components {
+  .half-container {
+    max-width: calc(100vw - (100vw - var(--screen-width, 1400px)) / 2);
+    padding: 0 2rem;
+  }
+
+  .movie-banner-shadow-focus::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    border: 3px solid white;
+    transition: opacity 300ms;
+    opacity: 0;
+    border-radius: inherit;
+  }
+
+  .movie-banner-shadow-focus:hover::before {
+    opacity: 1;
+  }
+
   .duo-tone-spinner-loader {
     width: 1.5rem;
     height: 1.5rem;
@@ -17,29 +37,44 @@
     animation: rotate 1s linear infinite
   }
 
-  .duo-tone-spinner-loader::before , .duo-tone-spinner-loader::after {
+  .duo-tone-spinner-loader::before,
+  .duo-tone-spinner-loader::after {
     content: "";
     box-sizing: border-box;
     position: absolute;
     inset: 0px;
     border-radius: 50%;
     border: 2px solid #FFF;
-    animation: prixClipFix 2s linear infinite ;
+    animation: prixClipFix 2s linear infinite;
   }
 
-  .duo-tone-spinner-loader::after{
-    transform: rotate3d(90, 90, 0, 180deg );
+  .duo-tone-spinner-loader::after {
+    transform: rotate3d(90, 90, 0, 180deg);
     @apply border-blue-pastel-300
   }
 
   @keyframes rotate {
-    0%   {transform: rotate(0deg)}
-    100%   {transform: rotate(360deg)}
+    0% {
+      transform: rotate(0deg)
+    }
+
+    100% {
+      transform: rotate(360deg)
+    }
   }
 
   @keyframes prixClipFix {
-      0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
-      50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
-      75%, 100%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
+    0% {
+      clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0)
+    }
+
+    50% {
+      clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0)
+    }
+
+    75%,
+    100% {
+      clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%)
+    }
   }
 }
