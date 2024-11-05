@@ -80,7 +80,12 @@
         "favorites": "Favoritos"
       },
       "profile": {
-        "name": "Visitante"
+        "name": "Visitante",
+        "account": {
+          "title": "Minha conta",
+          "profile": "Perfil"
+        },
+        "logout": "Sair"
       }
     },
     "HomePage": {

@@ -80,7 +80,12 @@
         "favorites": "Favorites"
       },
       "profile": {
-        "name": "Guest"
+        "name": "Guest",
+        "account": {
+          "title": "My Account",
+          "profile": "Profile"
+        },
+        "logout": "Log out"
       }
     },
     "HomePage": {

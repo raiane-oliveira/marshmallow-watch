@@ -8,3 +8,4 @@ export * from "./loaders";
 export * from "./avatar";
 export * from "./skeleton";
 export * from "./carousel";
+export * from "./dropdown-menu";

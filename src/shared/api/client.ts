@@ -172,7 +172,7 @@ class Api {
 		path: string,
 		data?: B,
 		headers?: HeadersInit,
-	): Promise<ApiFetchReturn<R>> {
+	): Promise<Omit<ApiFetchReturn<R>, "data">> {
 		await this.refreshToken();
 
 		const response = await this.api(path, {
@@ -185,13 +185,10 @@ class Api {
 			body: data instanceof FormData ? data : JSON.stringify(data),
 		});
 
-		const body: R = await response.json();
-
 		return {
 			status: response.status,
 			statusText: response.statusText,
 			headers: response.headers,
-			data: body,
 		};
 	}
 
