@@ -4,6 +4,9 @@
       "willWatch": "I'll watch",
       "watched": "Watched",
       "watching": "Watching"
+    },
+    "errors": {
+      "notAllowed": "Not allowed!"
     }
   },
   "Api": {

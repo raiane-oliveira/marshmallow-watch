@@ -4,6 +4,9 @@
       "willWatch": "Vou assistir",
       "watched": "Assistido",
       "watching": "Assistindo"
+    },
+    "errors": {
+      "notAllowed": "Não autorizado!"
     }
   },
   "Api": {

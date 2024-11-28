@@ -18,7 +18,7 @@ export type CurrentUserStore = CurrentUserState & CurrentUserActions;
 
 export const createCurrentUserStore = () =>
 	createStore<CurrentUserStore>()((set) => {
-		const userData = localStorage.getItem(userSessionDataKeyName);
+		const userData = localStorage.getItem(userSessionDataKeyName)
 		const { accessToken, refreshToken } = getAuth();
 
 		return {
