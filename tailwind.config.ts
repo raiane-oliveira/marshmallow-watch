@@ -36,8 +36,10 @@ const config: Config = {
 			},
 			fontSize: {
 				md: "0.9375rem", // 15px
+        "md-viewport": "clamp(0.9375rem, 1.04vw, 1.04vw)",
 				"lg-viewport": "clamp(1.125rem, 1.25vw, 1.25vw)",
 				"xl-viewport": "clamp(1.25rem, 1.4vw, 1.4vw)",
+				"4xl-viewport": "clamp(3.25rem, 2.5vw, 2.5vw)",
 				"5xl-viewport": "clamp(3rem, 3.3vw, 3.3vw)",
 				"sm-viewport": "clamp(0.875rem, 0.97vw, 0.97vw)",
 				"xs-viewport": "clamp(0.75rem, 0.7vw, 0.7vw)",
@@ -45,6 +47,7 @@ const config: Config = {
 			lineHeight: {
 				"4-viewport": "clamp(1rem, 1.11vw, 1.11vw)",
 				"5-viewport": "clamp(1.25rem, 1.4vw, 1.4vw)",
+        "10-viewport": "clamp(2.5rem, 2.7vw, 2.7vw)",
 			},
 			borderRadius: {
 				lg: "var(--radius)",

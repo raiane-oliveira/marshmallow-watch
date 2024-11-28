@@ -56,3 +56,8 @@ export interface Movie extends Media {
 export interface TvShow extends Media {
 	firstAirDate: Date;
 }
+
+export interface Genre {
+  id: string
+  name: string
+}

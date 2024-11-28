@@ -7,7 +7,8 @@
     },
     "errors": {
       "notAllowed": "Not allowed!"
-    }
+    },
+    "loading": "Loading"
   },
   "Api": {
     "errors": {
@@ -108,6 +109,32 @@
           "popular": "Popular",
           "releases": "Releases",
           "topRated": "Top Rated Series"
+        }
+      }
+    },
+    "MoviesPage": {
+      "Metadata": {
+        "title": "Movies"
+      },
+      "content": {
+        "header": {
+          "title": "Movies"
+        },
+        "genres": {
+          "featured": "Featured"
+        }
+      }
+    },
+    "TvShowsPage": {
+      "Metadata": {
+        "title": "Shows"
+      },
+      "content": {
+        "header": {
+          "title": "Shows"
+        },
+        "genres": {
+          "featured": "Featured"
         }
       }
     }
