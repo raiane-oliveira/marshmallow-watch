@@ -16,10 +16,9 @@ import {
   DropdownMenuTrigger,
   Logo,
 } from "@/shared/ui";
-import { SignOut } from "@phosphor-icons/react";
+import { BookmarksSimple, Queue, SignOut } from "@phosphor-icons/react";
 import {
   House,
-  ListHeart,
   MagnifyingGlass,
   Popcorn,
   TelevisionSimple,
@@ -100,15 +99,29 @@ export function Header() {
             </span>
           </Link>
 
-          <Link
-            href="/favorites"
-            className="text-zinc-700 uppercase flex items-center gap-2 py-4 px-4.5"
-          >
-            <ListHeart weight="fill" className="size-5" />
-            <span className="font-semibold text-sm/4">
-              {dict("nav.favorites")}
-            </span>
-          </Link>
+          {user && (
+            <>
+              <Link
+                href="/favorites"
+                className="text-zinc-700 uppercase flex items-center gap-2 py-4 px-4.5"
+              >
+                <BookmarksSimple weight="fill" className="size-5" />
+                <span className="font-semibold text-sm/4">
+                  {dict("nav.favorites")}
+                </span>
+              </Link>
+
+              <Link
+                href="/my-lists"
+                className="text-zinc-700 uppercase flex items-center gap-2 py-4 px-4.5"
+              >
+                <Queue weight="fill" className="size-5" />
+                <span className="font-semibold text-sm/4">
+                  {dict("nav.myLists")}
+                </span>
+              </Link>
+            </>
+          )}
         </nav>
 
         {user ? (
