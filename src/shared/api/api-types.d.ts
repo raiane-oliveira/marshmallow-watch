@@ -24,6 +24,7 @@ export interface Playlist {
 	visibility: "private" | "public";
 	color: string;
 	mediasId: string[];
+	isDefault: boolean;
 	createdAt: Date;
 	updatedAt: Date | null | undefined;
 }
@@ -58,6 +59,6 @@ export interface TvShow extends Media {
 }
 
 export interface Genre {
-  id: string
-  name: string
+	id: string;
+	name: string;
 }
