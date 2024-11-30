@@ -138,6 +138,21 @@
           "featured": "Featured"
         }
       }
+    },
+    "MyListsPage": {
+      "Metadata": {
+        "title": "My Lists"
+      },
+      "content": {
+        "header": {
+          "title": "My Lists",
+          "anotherUser": "{username}'s Lists"
+        },
+        "emptyLists": {
+          "currentUser": "You haven't created any custom lists yet. <btuton>Click here</button> to create one!",
+          "anotherUser": "It looks like {username} hasn't created any custom lists yet :("
+        }
+      }
     }
   }
 }

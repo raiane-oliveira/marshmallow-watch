@@ -1,16 +1,27 @@
-import { api, Playlist } from "@/shared/api";
+import { api, ApiErrorResponse, Playlist } from "@/shared/api";
+import { Locale } from "@/shared/i18n";
+import { ApiRequestError } from "@/shared/lib";
 
 interface GetUserPlaylistsProps {
 	username: string;
-	accessToken?: string;
+	accessToken?: string | null;
+	page: number;
+	locale: Locale;
+}
+
+export interface GetUserPlaylistsResponse {
+	playlists: Playlist[];
+	defaultPlaylists: Playlist[];
 }
 
 export async function getUserPlaylists({
 	username,
 	accessToken,
-}: GetUserPlaylistsProps): Promise<Playlist[]> {
-	const response = await api.get<{ playlists: Playlist[] }>(
-		`/users/${username}/playlists`,
+	page,
+	locale,
+}: GetUserPlaylistsProps): Promise<GetUserPlaylistsResponse> {
+	const response = await api.get(
+		`/users/${username}/playlists?page=${page}&lang=${locale}`,
 		accessToken
 			? {
 					Authorization: `Bearer ${accessToken}`,
@@ -18,6 +29,19 @@ export async function getUserPlaylists({
 			: undefined,
 	);
 
-	const { playlists } = response.data;
-	return playlists;
+	if (response.status !== 200) {
+		const err = response.data as ApiErrorResponse;
+		throw new ApiRequestError({
+			status: response.status,
+			message: err.message,
+		});
+	}
+
+	const { playlists, defaultPlaylists } =
+		response.data as GetUserPlaylistsResponse;
+
+	return {
+		playlists,
+		defaultPlaylists,
+	};
 }

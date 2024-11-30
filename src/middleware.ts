@@ -8,13 +8,12 @@ import { checkTimestampIsBeforeToday } from "./shared/lib";
 
 const handleI18nRouting = createMiddleware(routing);
 
-const privateRoutes = ["/favorites", "/my-lists"];
+const privateRoutes = ["/favorites", "/playlists"];
 
 export default async function middleware(request: NextRequest) {
 	const accessToken = request.cookies.get(accessTokenCookieName);
 	const refreshTokenCookie = request.cookies.get(refreshTokenCookieName);
 
-	console.log("request next url", request.nextUrl.pathname);
 	const toHomePage = () => NextResponse.redirect(new URL("/", request.url));
 
 	const refreshTokenPayload: Token | undefined =

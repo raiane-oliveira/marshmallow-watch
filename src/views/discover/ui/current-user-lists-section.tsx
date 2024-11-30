@@ -2,19 +2,19 @@
 
 import { useGetUserPlaylists } from "@/entities/playlists";
 import { useCurrentUserStore } from "@/entities/user";
-import { Locale } from "@/shared/i18n";
 import { MediasListSkeleton, PlaylistsList } from "@/widgets/app";
 import { useLocale, useTranslations } from "next-intl";
 
 export function CurrentUserListsSection() {
-	const locale = useLocale() as Locale;
+  const locale = useLocale()
 	const dict = useTranslations("App.HomePage");
 	const user = useCurrentUserStore((state) => state.user);
 	const accessToken = useCurrentUserStore((state) => state.accessToken);
 
 	const { data, isLoading, isError } = useGetUserPlaylists({
 		username: user?.username ?? "",
-		locale,
+		accessToken,
+    locale,
 	});
 
 	if (!accessToken) return null;
@@ -24,7 +24,9 @@ export function CurrentUserListsSection() {
 		return null;
 	}
 
-	const playlists = data ?? [];
+	const playlistsData = !data
+		? { playlists: [], defaultPlaylists: [] }
+		: data.pages[0];
 
 	return (
 		<section className="flex flex-col w-full gap-2.5">
@@ -35,7 +37,10 @@ export function CurrentUserListsSection() {
 			{isLoading ? (
 				<MediasListSkeleton />
 			) : (
-				<PlaylistsList playlists={playlists} />
+				<PlaylistsList
+					playlists={playlistsData.playlists}
+					defaultPlaylists={playlistsData.defaultPlaylists}
+				/>
 			)}
 		</section>
 	);

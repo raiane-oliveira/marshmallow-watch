@@ -1,6 +1,5 @@
 import { PlaylistCard } from "@/entities/playlists";
 import { Playlist } from "@/shared/api";
-import { userDefaultLists } from "@/shared/model";
 import {
 	Carousel,
 	CarouselContent,
@@ -11,22 +10,16 @@ import {
 import { useLocale, useTranslations } from "next-intl";
 
 interface MediasListProps {
+	defaultPlaylists: Playlist[];
 	playlists: Playlist[];
 }
 
 export function PlaylistsList({
-	playlists: originalPlaylists,
+	defaultPlaylists,
+	playlists,
 }: MediasListProps) {
 	const locale = useLocale();
 	const dict = useTranslations("Shared.userLists");
-
-	const playlists = [...originalPlaylists].sort((a) => {
-		if (Object.keys(userDefaultLists).includes(a.name)) {
-			return 1;
-		}
-
-		return -1;
-	});
 
 	return (
 		<Carousel
@@ -37,7 +30,24 @@ export function PlaylistsList({
 			}}
 		>
 			<CarouselContent className="ml-0 w-full">
-				{playlists?.map((playlist, index) => {
+				{playlists.map((playlist, index) => {
+					return (
+						<CarouselItem
+							key={playlist.id}
+							className="min-w-[230px] basis-[16dvw]"
+						>
+							<PlaylistCard
+								locale={locale}
+								playlist={playlist}
+								image={{
+									loading: index < 5 ? "eager" : "lazy",
+								}}
+							/>
+						</CarouselItem>
+					);
+				})}
+
+				{defaultPlaylists.map((playlist) => {
 					const defaultPlaylistName = playlist.isDefault
 						? dict(playlist.name as "willWatch" | "watched" | "watching")
 						: "";
@@ -50,9 +60,6 @@ export function PlaylistsList({
 							<PlaylistCard
 								locale={locale}
 								playlist={playlist}
-								image={{
-									loading: index < 5 ? "eager" : "lazy",
-								}}
 								defaultPlaylistName={defaultPlaylistName}
 							/>
 						</CarouselItem>

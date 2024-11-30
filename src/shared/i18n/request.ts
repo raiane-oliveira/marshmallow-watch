@@ -3,11 +3,11 @@ import { routing } from "./routing";
 import { notFound } from "next/navigation";
 
 export default getRequestConfig(async ({ locale }) => {
-  if (!routing.locales.includes(locale as any)) {
-    notFound()
-  }
+	if (!routing.locales.includes(locale as any)) {
+		notFound();
+	}
 
-  return {
-    messages: (await import(`./dictionaries/${locale}.json`)).default
-  }
-})
+	return {
+		messages: (await import(`./dictionaries/${locale}.json`)).default,
+	};
+});

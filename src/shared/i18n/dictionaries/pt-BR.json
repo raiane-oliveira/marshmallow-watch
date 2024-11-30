@@ -138,6 +138,21 @@
           "featured": "Destaques"
         }
       }
+    },
+    "MyListsPage": {
+      "Metadata": {
+        "title": "Minhas Listas"
+      },
+      "content": {
+        "header": {
+          "title": "Minhas Listas",
+          "anotherUser": "Listas de {username}"
+        },
+        "emptyLists": {
+          "currentUser": "Você ainda não criou nenhuma lista personalizada. <button>Clique aqui</button> para criar!",
+          "anotherUser": "Parece que {username} ainda não criou nenhuma lista personalizada :("
+        }
+      }
     }
   }
 }
